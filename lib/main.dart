@@ -45,6 +45,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  //API Request
   Future<String> apiRequest(String url, Map jsonMap) async {
     HttpClient httpClient = new HttpClient();
     HttpClientRequest request = await httpClient.postUrl(Uri.parse(url));
@@ -58,7 +59,11 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+
+    //Display Toast Method
     void displayMyToast({String msgToDisplay, bool isPositive}) {
+
       Fluttertoast.showToast(
           msg: msgToDisplay,
           toastLength: Toast.LENGTH_LONG,
@@ -85,8 +90,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
       String jsonString = await apiRequest(url, map);
       final jsonResponse = json.decode(jsonString);
-      Dao dao = new Dao.fromJson(jsonResponse);
 
+      //Dao is model class you will find inside model directory
+      Dao dao = new Dao.fromJson(jsonResponse);
       print(dao.message);
 
       displayMyToast(
@@ -162,6 +168,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     Widget loginButton() {
       return new Padding(
         padding: const EdgeInsets.all(16.0),
+
+        //Note : Here we took Raw widget to limit width of button wrapping text content
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -216,7 +224,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             password(),
             mySizedBox(40.0),
             loginButton(),
-//            loginButton()
           ],
         ),
       ),
